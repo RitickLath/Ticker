@@ -1,245 +1,31 @@
 import axios from "axios";
 
-let config = {
-  method: "get",
-  maxBodyLength: Infinity,
-  url: "https://ticker.finology.in/GetSearchData.ashx?q=query",
-  headers: {
-    "User-Agent":
-      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0",
-    Referer: "https://ticker.finology.in/loader.js?v=2",
-    "x-requested-with": "XMLHttpRequest",
-  },
+export const searchCompany = async (query: string) => {
+  if (!query.trim()) {
+    throw new Error("Query cannot be empty");
+  }
+
+  try {
+    const response = await axios.request({
+      method: "get",
+      maxBodyLength: Infinity,
+      url: `https://ticker.finology.in/GetSearchData.ashx?q=${encodeURIComponent(
+        query
+      )}`,
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0",
+        Referer: "https://ticker.finology.in/loader.js?v=2",
+        "x-requested-with": "XMLHttpRequest",
+      },
+    });
+
+    return response.data; // Return the data directly
+  } catch (error) {
+    // Log the error for debugging
+    console.error("Error fetching company data:", error.message);
+
+    // Throw the error to be handled by the router
+    throw new Error("Failed to fetch company data");
+  }
 };
-
-axios
-  .request(config)
-  .then((response) => {
-    console.log(JSON.stringify(response.data));
-  })
-  .catch((error) => {
-    console.log(error);
-  });
-
-const responseData = [
-  {
-    compname: "Reliance Industries Ltd.",
-    SYMBOL: "RELIANCE",
-    SCRIPCODE: 500325,
-    FINCODE: 100325,
-    brands:
-      "Gapco, AUTO LPG, Trans-Connect, Zivame, A1 Plaza, R Care, Qwik Mart, Refresh, RELSTAR, REPOL, RELENE, REON, RELPIPE, Reflex, ReLWOOD, IMPRAMER, RELX, RELAB, Recron, relpet, Reliance Retail, Reliance Fresh, Reliance super, Reliance SMART, Reliance MARKET, Reliance Digital, Reliance digital Xpress, istore, resQ, Reliance Jewels, TRENDS, AJIO, PROJECT EVE, avaasa, DNMX, JOHN PLAYERS, NETPLAY, Ermenegildo Zegna, Paul & Shark, Stuart Weitzman, Brooks Brothers, Vision express, VIMAL, Candie's, Jio, IBN, IndiaCast, IBNLive, Burrp, Colosceum, H. LEWIS, GEORGIA GULLINI, D-CREASED",
-    searchterms: "RIL",
-    productlist: "",
-  },
-  {
-    compname: "Reliance Power Ltd.",
-    SYMBOL: "RPOWER",
-    SCRIPCODE: 532939,
-    FINCODE: 200039,
-    brands: null,
-    searchterms: null,
-    productlist: null,
-  },
-  {
-    compname: "Relaxo Footwears Ltd.",
-    SYMBOL: "RELAXO",
-    SCRIPCODE: 530517,
-    FINCODE: 130517,
-    brands: "Bahamas, flite, sparx, schoolmate",
-    searchterms: "",
-    productlist: "",
-  },
-  {
-    compname: "Reliance Infrastructure Ltd.",
-    SYMBOL: "RELINFRA",
-    SCRIPCODE: 500390,
-    FINCODE: 100390,
-    brands: null,
-    searchterms: null,
-    productlist: null,
-  },
-  {
-    compname: "Religare Enterprises Ltd.",
-    SYMBOL: "RELIGARE",
-    SCRIPCODE: 532915,
-    FINCODE: 132915,
-    brands: null,
-    searchterms: null,
-    productlist: null,
-  },
-  {
-    compname: "Reliance Industrial Infrastructure Ltd.",
-    SYMBOL: "RIIL",
-    SCRIPCODE: 523445,
-    FINCODE: 123445,
-    brands: null,
-    searchterms: null,
-    productlist: null,
-  },
-  {
-    compname: "Reliance Communications Ltd.",
-    SYMBOL: "RCOM",
-    SCRIPCODE: 532712,
-    FINCODE: 132712,
-    brands: null,
-    searchterms: null,
-    productlist: null,
-  },
-  {
-    compname: "Reliance Capital Ltd.",
-    SYMBOL: "RELCAPITAL",
-    SCRIPCODE: 500111,
-    FINCODE: 100111,
-    brands: null,
-    searchterms: null,
-    productlist: null,
-  },
-  {
-    compname: "Reliance Home Finance Ltd.",
-    SYMBOL: "RHFL",
-    SCRIPCODE: 540709,
-    FINCODE: 220748,
-    brands: null,
-    searchterms: null,
-    productlist: null,
-  },
-  {
-    compname: "Reliance Chemotex Industries Ltd.",
-    SYMBOL: "RELCHEMQ",
-    SCRIPCODE: 503162,
-    FINCODE: 103162,
-    brands: null,
-    searchterms: null,
-    productlist: null,
-  },
-  {
-    compname: "Relicab Cable Manufacturing Ltd.",
-    SYMBOL: "0",
-    SCRIPCODE: 539760,
-    FINCODE: 280180,
-    brands: null,
-    searchterms: null,
-    productlist: null,
-  },
-  {
-    compname: "Reliance Jute Mills International Limited",
-    SYMBOL: "0",
-    SCRIPCODE: 0,
-    FINCODE: 213957,
-    brands: null,
-    searchterms: null,
-    productlist: null,
-  },
-  {
-    compname: "Reliance Infotek Ltd.",
-    SYMBOL: "0",
-    SCRIPCODE: 0,
-    FINCODE: 237285,
-    brands: null,
-    searchterms: null,
-    productlist: null,
-  },
-  {
-    compname: "Reliance Polycrete Ltd.",
-    SYMBOL: "0",
-    SCRIPCODE: 0,
-    FINCODE: 269185,
-    brands: null,
-    searchterms: null,
-    productlist: null,
-  },
-  {
-    compname: "Reliable Data Services Ltd.",
-    SYMBOL: "RELIABLE",
-    SCRIPCODE: 544207,
-    FINCODE: 287374,
-    brands: null,
-    searchterms: null,
-    productlist: null,
-  },
-  {
-    compname: "Reliable Ventures India Ltd.",
-    SYMBOL: "0",
-    SCRIPCODE: 532124,
-    FINCODE: 132124,
-    brands: null,
-    searchterms: null,
-    productlist: null,
-  },
-  {
-    compname: "Relic Technologies Ltd.",
-    SYMBOL: "0",
-    SCRIPCODE: 511712,
-    FINCODE: 111712,
-    brands: null,
-    searchterms: null,
-    productlist: null,
-  },
-  {
-    compname: "Reliance General Insurance Co Ltd",
-    SYMBOL: "0",
-    SCRIPCODE: 0,
-    FINCODE: 217382,
-    brands: null,
-    searchterms: null,
-    productlist: null,
-  },
-  {
-    compname: "Rajesh Exports Ltd.",
-    SYMBOL: "RAJESHEXPO",
-    SCRIPCODE: 531500,
-    FINCODE: 131500,
-    brands: "SHUBH Jewelers, valcambi, REL",
-    searchterms: "",
-    productlist: null,
-  },
-  {
-    compname: "Ravindra Energy Ltd.",
-    SYMBOL: "RELTD",
-    SCRIPCODE: 504341,
-    FINCODE: 104341,
-    brands: null,
-    searchterms: null,
-    productlist: null,
-  },
-  {
-    compname: "Ravi Kumar Distilleries Ltd.",
-    SYMBOL: "RKDL",
-    SCRIPCODE: 533294,
-    FINCODE: 209070,
-    brands:
-      "Capricon, 2 barrels, 3 coins, dupleix, mr. King, kada mark, konark, chevalier, green magic, oncemore",
-    searchterms: "",
-    productlist: null,
-  },
-  {
-    compname: "Marksans Pharma Ltd.",
-    SYMBOL: "MARKSANS",
-    SCRIPCODE: 524404,
-    FINCODE: 124404,
-    brands: "RelonChem, Time-Caps labs, Bell's Healthcare, NOVA",
-    searchterms: "",
-    productlist: null,
-  },
-  {
-    compname: "Amrutanjan Health Care Ltd.",
-    SYMBOL: "AMRUTANJAN",
-    SCRIPCODE: 590006,
-    FINCODE: 190006,
-    brands:
-      "FRUITNIK, Comfy Snug Fit, Decorn Corn Caps, Roll-on, Relief Cold Rub, Relief Nasal Inhaler, Relief Swas Mint, Relief Cough Syrup",
-    searchterms: "",
-    productlist: null,
-  },
-  {
-    compname: "BCL Industries Ltd.",
-    SYMBOL: "BCLIND",
-    SCRIPCODE: 524332,
-    FINCODE: 124332,
-    brands:
-      "Home Cook, Murli, WHITE GOLD, DO KHAJOOR, Asli Santra, Ranjha sufi, PUNJAB SPECIAL WHISKY, PUNJAB SPECIAL GIN, PUNJAB SPECIAL RUM, Cozi Dry Gin, MC CHOICE PREMIUM WHISKY, RED ROYAL WHISKY, Summer Chef VODKA, MC CHOICE FINE WHISKY, ROYAL PATIALA WHISKY, OLD PROFESSOR WHISKY, CEROS RUM, RANGERS BARREL, BANG BANG, ON THE ROCKS",
-    searchterms: "",
-    productlist: null,
-  },
-];
