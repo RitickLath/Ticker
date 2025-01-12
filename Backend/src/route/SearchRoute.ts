@@ -4,7 +4,7 @@ import { searchCompany } from "../APIs/Search";
 const SearchRouter = Router();
 
 // API Endpoint: /search/:query
-SearchRouter.get("/:query", async (req: Request, res: Response) => {
+SearchRouter.get("/search/:query", async (req: Request, res: Response) => {
   const query = req.params.query;
 
   try {
