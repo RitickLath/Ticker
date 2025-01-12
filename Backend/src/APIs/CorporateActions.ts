@@ -1,25 +1,25 @@
 import axios from "axios";
 
-let config = {
-  method: "get",
-  maxBodyLength: Infinity,
-  url: "https://ticker.finology.in/GetCorpAction.ashx?fincode=100325",
-  headers: {
-    "User-Agent":
-      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0",
-    Referer: "https://ticker.finology.in/loader.js?v=2",
-    "x-requested-with": "XMLHttpRequest",
-  },
+export const CorporateActions = (fincode: number) => {
+  axios
+    .request({
+      method: "get",
+      maxBodyLength: Infinity,
+      url: "https://ticker.finology.in/GetCorpAction.ashx?fincode=" + fincode,
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0",
+        Referer: "https://ticker.finology.in/loader.js?v=2",
+        "x-requested-with": "XMLHttpRequest",
+      },
+    })
+    .then((response) => {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
-
-axios
-  .request(config)
-  .then((response) => {
-    console.log(JSON.stringify(response.data));
-  })
-  .catch((error) => {
-    console.log(error);
-  });
 
 const ResponseSample = {
   Table: [
