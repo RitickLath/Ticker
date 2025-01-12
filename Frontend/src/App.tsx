@@ -1,14 +1,15 @@
-import About from "./Sections/About";
-import Footer from "./Sections/Footer";
-import Landing from "./Sections/Landing";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./Pages/Home";
+import Company from "./Pages/Company";
 
 const App = () => {
   return (
-    <div>
-      <Landing />
-      <About />
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="company/:id" element={<Company />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
