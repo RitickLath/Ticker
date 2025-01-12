@@ -5,10 +5,11 @@ import * as cheerio from "cheerio";
 const scrap = Router();
 
 // COMPANY ESSENTIAL
-scrap.get("/company-essential", async (req, res) => {
+scrap.get("/company-essential/:company", async (req, res) => {
+  const { company } = req.params;
   try {
     // URL to scrape
-    const url = "https://ticker.finology.in/company/TATASTEEL";
+    const url = "https://ticker.finology.in/company/" + company;
 
     // Fetch the HTML content of the page
     const response = await axios.get(url);
@@ -53,10 +54,11 @@ scrap.get("/company-essential", async (req, res) => {
 });
 
 // PRICE SUMMARY
-scrap.get("/price-summary", async (req, res) => {
+scrap.get("/price-summary/:company", async (req, res) => {
+  const { company } = req.params;
   try {
     // URL to scrape
-    const url = "https://ticker.finology.in/company/TATASTEEL";
+    const url = "https://ticker.finology.in/company/" + company;
 
     // Fetch the HTML content of the page
     const response = await axios.get(url);
@@ -84,10 +86,11 @@ scrap.get("/price-summary", async (req, res) => {
 });
 
 // PROMOTER PLEDGE DATE WISE
-scrap.get("/promoter-pledge", async (req, res) => {
+scrap.get("/promoter-pledge/:company", async (req, res) => {
+  const { company } = req.params;
   try {
     // URL to scrape
-    const url = "https://ticker.finology.in/company/TATASTEEL";
+    const url = "https://ticker.finology.in/company/" + company;
 
     // Fetch the HTML content of the page
     const response = await axios.get(url);
@@ -122,9 +125,10 @@ scrap.get("/promoter-pledge", async (req, res) => {
 });
 
 // QUATERLY RESULT // date left
-scrap.get("/quarterly-result", async (req, res) => {
+scrap.get("/quarterly-result/:company", async (req, res) => {
+  const { company } = req.params;
   try {
-    const url = "https://ticker.finology.in/company/TATASTEEL";
+    const url = "https://ticker.finology.in/company/" + company;
 
     // Fetch the HTML content of the page
     const response = await axios.get(url);
