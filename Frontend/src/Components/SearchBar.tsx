@@ -16,7 +16,7 @@ const styles = {
 interface OptionType {
   FINCODE: number;
   SCRIPCODE?: number;
-  SYMBOL?: string;
+  SYMBOL: string;
   brands?: string;
   compname: string | "";
   productlist?: string | null;
@@ -29,13 +29,13 @@ const SearchBar = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const navigate = useNavigate();
 
-  const handleChange = (e: { target: { value: SetStateAction<string>; }; }) => {
+  const handleChange = (e: { target: { value: SetStateAction<string> } }) => {
     setInputText(e?.target?.value);
   };
 
   const handleOptionClick = (c: string, code: number) => {
     setInputText(c);
-    navigate("company/" + code);
+    navigate("company/" + c);
     setIsDropdownVisible(false);
     // console.log("Dropbox");
   };
@@ -95,7 +95,7 @@ const SearchBar = () => {
                 key={i}
                 onClick={() =>
                   //navigate(option.FINCODE)
-                  handleOptionClick(option.compname, option.FINCODE)
+                  handleOptionClick(option.SYMBOL, option.FINCODE)
                 }
                 className={styles.option}
               >
