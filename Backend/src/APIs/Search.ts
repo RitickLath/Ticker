@@ -23,7 +23,7 @@ export const searchCompany = async (query: string) => {
     return response.data; // Return the data directly
   } catch (error) {
     // Log the error for debugging
-    console.error("Error fetching company data:", error.message);
+    console.error("Error fetching company data:");
 
     // Throw the error to be handled by the router
     throw new Error("Failed to fetch company data");

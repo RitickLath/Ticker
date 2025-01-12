@@ -1,24 +1,25 @@
 import axios from "axios";
 
-export const CorporateActions = (fincode: number) => {
-  axios
-    .request({
+export const CorporateActions = async (fincode: number) => {
+  try {
+    const response = await axios.request({
       method: "get",
       maxBodyLength: Infinity,
-      url: "https://ticker.finology.in/GetCorpAction.ashx?fincode=" + fincode,
+      url: `https://ticker.finology.in/GetCorpAction.ashx?fincode=${fincode}`,
       headers: {
         "User-Agent":
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0",
         Referer: "https://ticker.finology.in/loader.js?v=2",
         "x-requested-with": "XMLHttpRequest",
       },
-    })
-    .then((response) => {
-      console.log(JSON.stringify(response.data));
-    })
-    .catch((error) => {
-      console.log(error);
     });
+
+    console.log("Corporate Actions Data:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching Corporate Actions:");
+    throw new Error("Failed to fetch corporate actions.");
+  }
 };
 
 const ResponseSample = {

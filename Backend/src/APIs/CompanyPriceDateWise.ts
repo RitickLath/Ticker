@@ -1,12 +1,12 @@
 import axios from "axios";
 
-export const CompanyPriceDatewise = (
+export const CompanyPriceDatewise = async (
   fincode: number,
   symbol: string,
   scripcode: number
 ) => {
-  axios
-    .request({
+  try {
+    const response = await axios.request({
       method: "get",
       maxBodyLength: Infinity,
       url: `https://ticker.finology.in/GetPrices.ashx?fincode=${fincode}&scripcode=${scripcode}&symbol=${symbol}&stk=BSE&type=Y&count=1`,
@@ -16,13 +16,14 @@ export const CompanyPriceDatewise = (
         Referer: "https://ticker.finology.in/loader.js?v=2",
         "x-requested-with": "XMLHttpRequest",
       },
-    })
-    .then((response) => {
-      console.log(JSON.stringify(response.data));
-    })
-    .catch((error) => {
-      console.log(error);
     });
+
+    // console.log("Company Price Data:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching company price data:");
+    throw new Error("Failed to fetch company price data.");
+  }
 };
 
 const Sample = [

@@ -1,10 +1,8 @@
-// complete
-
 import axios from "axios";
 
-export const GroupCompany = (housecode: number) => {
-  axios
-    .request({
+export const GroupCompany = async (housecode: number): Promise<any> => {
+  try {
+    const response = await axios.request({
       method: "get",
       maxBodyLength: Infinity,
       url:
@@ -15,13 +13,13 @@ export const GroupCompany = (housecode: number) => {
         Referer: "https://ticker.finology.in/loader.js?v=2",
         "x-requested-with": "XMLHttpRequest",
       },
-    })
-    .then((response) => {
-      console.log(JSON.stringify(response.data));
-    })
-    .catch((error) => {
-      console.log(error);
     });
+    // console.log("Response Data: ", response.data);
+    return response.data; // Return the API response
+  } catch (error) {
+    console.error("Error fetching group company data: ", error);
+    throw error; // Propagate the error to the caller
+  }
 };
 
 const sample = [

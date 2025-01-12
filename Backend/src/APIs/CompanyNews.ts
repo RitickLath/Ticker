@@ -1,24 +1,25 @@
 import axios from "axios";
 
-const companyNews = (fincode: number) => {
-  axios
-    .request({
+export const companyNews = async (fincode: number) => {
+  try {
+    const response = await axios.request({
       method: "get",
       maxBodyLength: Infinity,
-      url: "https://ticker.finology.in/News.ashx?fincode=" + fincode,
+      url: `https://ticker.finology.in/News.ashx?fincode=${fincode}`,
       headers: {
         "User-Agent":
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0",
         Referer: "https://ticker.finology.in/loader.js?v=2",
         "x-requested-with": "XMLHttpRequest",
       },
-    })
-    .then((response) => {
-      console.log(JSON.stringify(response.data));
-    })
-    .catch((error) => {
-      console.log(error);
     });
+
+    //console.log("Company News:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching company news:");
+    throw new Error("Failed to fetch company news.");
+  }
 };
 
 const sample = [

@@ -1,10 +1,8 @@
-// complete
-
 import axios from "axios";
 
-export const Holding = (fincode: number) => {
-  axios
-    .request({
+export const Holding = async (fincode: number): Promise<any> => {
+  try {
+    const response = await axios.request({
       method: "get",
       maxBodyLength: Infinity,
       url: "https://ticker.finology.in/GetShares.ashx?v=4.0&fincode=" + fincode,
@@ -26,13 +24,13 @@ export const Holding = (fincode: number) => {
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0",
         "x-requested-with": "XMLHttpRequest",
       },
-    })
-    .then((response) => {
-      console.log(JSON.stringify(response.data));
-    })
-    .catch((error) => {
-      console.log(error);
     });
+    console.log("Response Data: ", response.data);
+    return response.data; // Return the data
+  } catch (error) {
+    console.error("Error fetching holding data: ", error);
+    throw error; // Propagate the error to the caller
+  }
 };
 
 const sample = [

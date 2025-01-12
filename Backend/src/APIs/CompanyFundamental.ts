@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export const companyFundamental = (fincode: number) => {
-  axios
-    .request({
+export const companyFundamental = async (fincode: number) => {
+  try {
+    const response = await axios.request({
       method: "get",
       maxBodyLength: Infinity,
       url: `https://ticker.finology.in/peers.ashx?fincode=${fincode}&mode=S&peercount=10`,
@@ -12,13 +12,14 @@ export const companyFundamental = (fincode: number) => {
         Referer: "https://ticker.finology.in/loader.js?v=2",
         "x-requested-with": "XMLHttpRequest",
       },
-    })
-    .then((response) => {
-      console.log(JSON.stringify(response.data));
-    })
-    .catch((error) => {
-      console.log(error);
     });
+
+    // console.log("Company Fundamental Data:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching company fundamental data:");
+    throw new Error("Failed to fetch company fundamental data.");
+  }
 };
 
 const sample = [
