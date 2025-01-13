@@ -80,8 +80,9 @@ This project is designed to provide a seamless interface to fetch and serve stoc
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/ticker-finology-api.git
-   cd ticker-finology-api
+   git clone https://github.com/RitickLath/Ticker.git
+   cd Ticker
+   cd Backend
    ```
 2. Install dependencies:
    ```bash
