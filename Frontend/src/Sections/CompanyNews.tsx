@@ -7,13 +7,13 @@ interface NewsItem {
   Newsdate: string;
   NewsTime: string;
   Details: string;
+  showFullDetails: boolean;
 }
-
 
 const CompanyNews = () => {
   const [companyNews, setCompanyNews] = useState<NewsItem[]>([]);
-
   const { fincode } = useParams<{ fincode: string }>();
+
   useEffect(() => {
     if (!fincode) return;
 
@@ -21,7 +21,6 @@ const CompanyNews = () => {
     axios
       .get(`http://localhost:3000/api/v1/CompanyNews/${fincode}`)
       .then((response) => {
-        //console.log(response.data.data);
         const data: NewsItem[] = response.data.data || [];
         setCompanyNews(
           data
@@ -31,6 +30,7 @@ const CompanyNews = () => {
               Newsdate: item.Newsdate || "No Date",
               NewsTime: item.NewsTime || "No Time",
               Details: item.Details || "No Details",
+              showFullDetails: false,
             }))
         );
       })
@@ -42,10 +42,22 @@ const CompanyNews = () => {
             Newsdate: "",
             NewsTime: "",
             Details: "No news data",
+            showFullDetails: false,
           },
         ]);
       });
   }, [fincode]);
+
+  // Toggle details view
+  const toggleDetails = (index: number) => {
+    setCompanyNews((prevNews) =>
+      prevNews.map((newsItem, i) =>
+        i === index
+          ? { ...newsItem, showFullDetails: !newsItem.showFullDetails }
+          : newsItem
+      )
+    );
+  };
 
   return (
     <div className="bg-white mt-8 p-6 rounded-md">
@@ -57,10 +69,34 @@ const CompanyNews = () => {
             <p className="text-sm text-gray-500">
               {news.Newsdate} at {news.NewsTime}
             </p>
-            <div
-              className="mt-2"
-              dangerouslySetInnerHTML={{ __html: news.Details }}
-            />
+            <div className="mt-2">
+              <p>
+                {news?.showFullDetails ? (
+                  // Show full content if "Show More" is clicked
+                  <span
+                    className="content"
+                    dangerouslySetInnerHTML={{ __html: news.Details }}
+                  />
+                ) : // Show truncated content
+                news.Details.length > 200 ? ( // Truncate if more than 200 chars
+                  <span
+                    className="content"
+                    dangerouslySetInnerHTML={{
+                      __html: news.Details.substring(0, 200) + "...",
+                    }}
+                  />
+                ) : (
+                  news.Details
+                )}
+                {/* "Read More" Button */}
+                <button
+                  className="text-blue-500 cursor-pointer"
+                  onClick={() => toggleDetails(index)}
+                >
+                  {news.showFullDetails ? "Show Less" : "Read More"}
+                </button>
+              </p>
+            </div>
           </div>
         ))}
       </div>

@@ -33,8 +33,9 @@ const SearchBar = () => {
     setInputText(e?.target?.value);
   };
 
-  const handleOptionClick = (c: string, code: number) => {
+  const handleOptionClick = (c: string, code: number, compname: string) => {
     setInputText(c);
+    localStorage.setItem("compname", compname);
     navigate("company/" + c + "/" + code);
     setIsDropdownVisible(false);
     // console.log("Dropbox");
@@ -95,7 +96,11 @@ const SearchBar = () => {
                 key={i}
                 onClick={() =>
                   //navigate(option.FINCODE)
-                  handleOptionClick(option.SYMBOL, option.FINCODE)
+                  handleOptionClick(
+                    option.SYMBOL,
+                    option.FINCODE,
+                    option.compname
+                  )
                 }
                 className={styles.option}
               >
