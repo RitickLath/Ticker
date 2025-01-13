@@ -35,7 +35,7 @@ const SearchBar = () => {
 
   const handleOptionClick = (c: string, code: number) => {
     setInputText(c);
-    navigate("company/" + c);
+    navigate("company/" + c + "/" + code);
     setIsDropdownVisible(false);
     // console.log("Dropbox");
   };

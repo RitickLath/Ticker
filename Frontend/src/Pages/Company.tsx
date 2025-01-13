@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import CompanyNews from "../Sections/CompanyNews";
 
 interface PriceSummaryItem {
   title: string;
@@ -15,11 +16,13 @@ interface CompanyEssentialItem {
 
 const Company = () => {
   const { company } = useParams<{ company: string }>(); // TypeScript-safe useParams
+  // const { fincode } = useParams<{ fincode: string }>();
   const [priceSummary, setPriceSummary] = useState<PriceSummaryItem[]>([]);
   const [companyEssentials, setCompanyEssentials] = useState<
     CompanyEssentialItem[]
   >([]);
 
+  //console.log(fincode);
   useEffect(() => {
     if (!company) return;
 
@@ -116,6 +119,7 @@ const Company = () => {
           </div>
         </div>
       </div>
+      <CompanyNews />
     </div>
   );
 };
